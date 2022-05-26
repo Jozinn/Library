@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    padding: 1em;
+    background-color: lightgrey;
+}
+.hide {
+    display: none;
+}
+.book {
+    width: 250px;
+    height: 250px;
+    font-family: Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 1em;
+    margin: 1em;
+}
+#library {
+    display: flex;
+    margin-top: 1em;
+}
