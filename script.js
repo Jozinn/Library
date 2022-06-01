@@ -8,7 +8,7 @@ function Book(author, title, pages, read) {
 }
 
 function addBookToLibrary() {
-    book = new Book(author.value, title.value, pages.value, read.value);
+    book = new Book(author.value, title.value, pages.value, Boolean(read.value));
     myLibrary.push(book);
     renderBooks();
 }
@@ -22,10 +22,16 @@ function renderBooks() {
         bookRef.innerHTML = `<p>Author: ${book.author}</p>
         <p>Title: ${book.title}</p>
         <p>Number of pages: ${book.pages}</p>
-        <p>Read: ${book.read}</p>
-        <label for="is-read${myLibrary.indexOf(book)}">Have you read this book?</label>
-        <input type="checkbox" class="ckeck" id="is-read${myLibrary.indexOf(book)}">
-        <button class="btn">Remove</button>`;
+        <p>Read: ${book.read}</p>`;
+        if(book.read) {
+            bookRef.innerHTML += `<label for="is-read${myLibrary.indexOf(book)}">Have you read this book?</label>
+            <input type="checkbox" class="check" id="is-read${myLibrary.indexOf(book)}" checked>`
+        }
+        else {
+            bookRef.innerHTML += `<label for="is-read${myLibrary.indexOf(book)}">Have you read this book?</label>
+            <input type="checkbox" class="check" id="is-read${myLibrary.indexOf(book)}" >`
+        }
+        bookRef.innerHTML += '<button class="btn">Remove</button>';
         library.appendChild(bookRef);
     });
 }
@@ -43,8 +49,6 @@ const checkboxes = [...document.getElementsByClassName("check")];
 
 document.querySelector("#library").addEventListener("click", e => {
     if(e.target.tagName == "BUTTON") {
-        //myLibrary.splice(books.indexOf(e.target), 1);
-        //console.log(books.indexOf(e.target));
         console.log(e.target.parentNode);
         myLibrary = myLibrary.filter((el, index) => {
             return index !== +e.target.parentNode.getAttribute("data-index");
@@ -54,12 +58,9 @@ document.querySelector("#library").addEventListener("click", e => {
     }
 });
 
-checkboxes.forEach(checkbox => {
-    checkbox.addEventListener("change", e => {
-        myLibrary[+e.target.parentNode.getAttribute("data-index")].read = checkbox.value;
-        renderBooks();
-    });
-    checkbox.value = myLibrary[checkboxes.indexOf(checkbox)].read;
+document.querySelector("#library").addEventListener("change", e => {
+    myLibrary[+e.target.parentNode.getAttribute("data-index")].read = !myLibrary[+e.target.parentNode.getAttribute("data-index")].read;
+    renderBooks();
 });
 
 add.addEventListener("click", () => {
@@ -72,5 +73,4 @@ submit.addEventListener("click", () => {
     form.classList.toggle("hide");
     addBookToLibrary();
 });
-
 

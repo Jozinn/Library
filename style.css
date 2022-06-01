@@ -25,3 +25,6 @@ body {
     display: flex;
     margin-top: 1em;
 }
+button {
+    margin-left: 1em;
+}
